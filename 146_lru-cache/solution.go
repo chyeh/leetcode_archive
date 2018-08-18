@@ -5,48 +5,49 @@ import (
 )
 
 type LRUCache struct {
-	dm       map[int]*list.Element //Data Map: Key to Element
-	ol       *list.List            // List of used order
+	kv       map[int]int
+	kn       map[int]*list.Element
+	kl       *list.List
 	capacity int
-}
-
-type kv struct {
-	k int
-	v int
 }
 
 func Constructor(capacity int) LRUCache {
 	return LRUCache{
-		dm:       make(map[int]*list.Element, capacity),
-		ol:       list.New(),
+		kv:       make(map[int]int),
+		kn:       make(map[int]*list.Element),
+		kl:       list.New(),
 		capacity: capacity,
 	}
 }
 
 func (this *LRUCache) Get(key int) int {
-	v, ok := this.dm[key]
-	if !ok {
+	if _, ok := this.kv[key]; !ok {
 		return -1
 	}
-	this.ol.MoveToBack(v)
-	return v.Value.(kv).v
+	val := this.kv[key]
+	node := this.kn[key]
+	this.kl.MoveToBack(node)
+	return val
 }
 
 func (this *LRUCache) Put(key int, value int) {
 	if this.capacity == 0 {
 		return
 	}
-	if v, ok := this.dm[key]; ok { // existent: update
-		v.Value = kv{key, value}
-		this.ol.MoveToBack(v)
-	} else { // nonexistent
-		if len(this.dm) == this.capacity { // full, invalidate the oldest
-			delete(this.dm, this.ol.Front().Value.(kv).k)
-			this.ol.Remove(this.ol.Front())
+	if _, ok := this.kv[key]; ok {
+		this.kv[key] = value
+		node := this.kn[key]
+		this.kl.MoveToBack(node)
+	} else {
+		if this.kl.Len() == this.capacity {
+			front := this.kl.Front()
+			delete(this.kv, front.Value.(int))
+			delete(this.kn, front.Value.(int))
+			this.kl.Remove(this.kl.Front())
 		}
-		// insert
-		this.ol.PushBack(kv{key, value})
-		this.dm[key] = this.ol.Back()
+		this.kv[key] = value
+		e := this.kl.PushBack(key)
+		this.kn[key] = e
 	}
 }
 
