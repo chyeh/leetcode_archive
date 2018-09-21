@@ -14,13 +14,10 @@ type Interval struct {
 }
 
 func overlaps(a, b Interval) bool {
-	if (a.Start <= b.Start && a.End >= b.Start) ||
-		(a.Start >= b.Start && a.Start <= b.End) ||
-		(a.Start >= b.Start && a.End <= b.End) ||
-		(a.Start <= b.Start && a.End >= b.End) {
-		return true
+	if a.End < b.Start || b.End < a.Start {
+		return false
 	}
-	return false
+	return true
 }
 
 func merge(intervals []Interval) []Interval {
