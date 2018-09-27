@@ -1,27 +1,21 @@
 package solution
 
 func merge(nums1 []int, m int, nums2 []int, n int) {
-	ans := make([]int, m+n, m+n)
-	j := m - 1
-	k := n - 1
-	for i := m + n - 1; i >= 0; i-- {
-		if j == -1 {
-			ans[i] = nums2[k]
-			k--
-			continue
-		}
-		if k == -1 {
-			ans[i] = nums1[j]
+	i := m - 1
+	j := n - 1
+	for k := m + n - 1; k >= 0; k-- {
+		if i < 0 {
+			nums1[k] = nums2[j]
 			j--
-			continue
-		}
-		if nums1[j] > nums2[k] {
-			ans[i] = nums1[j]
-			j--
+		} else if j < 0 {
+			nums1[k] = nums1[i]
+			i--
+		} else if nums1[i] > nums2[j] {
+			nums1[k] = nums1[i]
+			i--
 		} else {
-			ans[i] = nums2[k]
-			k--
+			nums1[k] = nums2[j]
+			j--
 		}
 	}
-	copy(nums1, ans)
 }
