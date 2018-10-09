@@ -19,7 +19,8 @@ func caculateSum(node *TreeNode, maxSum *int) int {
 	}
 	lmax := caculateSum(node.Left, maxSum)
 	rmax := caculateSum(node.Right, maxSum)
-	sum := max(node.Val, rmax+node.Val)
+	sum := node.Val
+	sum = max(sum, rmax+node.Val)
 	sum = max(sum, lmax+node.Val)
 
 	if max(sum, rmax+lmax+node.Val) > *maxSum {
@@ -32,5 +33,5 @@ func caculateSum(node *TreeNode, maxSum *int) int {
 func maxPathSum(root *TreeNode) int {
 	maxSum := -2147483648
 	caculateSum(root, &maxSum)
-	return max(caculateSum(root, &maxSum), maxSum)
+	return maxSum
 }
