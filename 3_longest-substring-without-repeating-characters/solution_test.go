@@ -10,9 +10,10 @@ func TestLengthOfLongestSubstring(t *testing.T) {
 		input    string
 		expected int
 	}{
-		{"abcabcbb", 3},
+		/*{"abcabcbb", 3},
 		{"bbbbb", 1},
-		{"pwwkew", 3},
+		{"pwwkew", 3},*/
+		{"abba", 2},
 	}
 
 	for i, v := range tests {
