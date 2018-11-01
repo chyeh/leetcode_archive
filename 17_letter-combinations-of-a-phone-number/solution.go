@@ -1,20 +1,21 @@
 package solution
 
-func generate(curr string, sets []string, ans *[]string) {
-	if len(curr) == len(sets) {
-		*ans = append(*ans, curr)
+func generate(sol string, digits string, alphabets map[byte]string, sols *[]string) {
+	if len(digits) == 0 {
+		*sols = append(*sols, sol)
 		return
 	}
-	for _, c := range sets[len(curr)] {
-		generate(curr+string(c), sets, ans)
+	for _, c := range alphabets[digits[0]] {
+		generate(sol+string(c), digits[1:], alphabets, sols)
 	}
 }
 
 func letterCombinations(digits string) []string {
+	sols := []string{}
 	if len(digits) == 0 {
-		return nil
+		return sols
 	}
-	alphabets := make(map[rune]string)
+	alphabets := make(map[byte]string)
 	alphabets['2'] = "abc"
 	alphabets['3'] = "def"
 	alphabets['4'] = "ghi"
@@ -23,11 +24,6 @@ func letterCombinations(digits string) []string {
 	alphabets['7'] = "pqrs"
 	alphabets['8'] = "tuv"
 	alphabets['9'] = "wxyz"
-	sets := []string{}
-	for _, d := range digits {
-		sets = append(sets, alphabets[d])
-	}
-	ans := []string{}
-	generate("", sets, &ans)
-	return ans
+	generate("", digits, alphabets, &sols)
+	return sols
 }
