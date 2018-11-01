@@ -1,29 +1,24 @@
 package solution
 
-func dfs(u, v int, adj map[int][]int, visited map[int]bool) bool {
-	if u == v {
+func hasCycle(start, u, v int, adj map[int][]int) bool {
+	if v == start {
 		return true
 	}
-	visited[u] = true
-	for _, next := range adj[u] {
-		if !visited[next] && dfs(next, v, adj, visited) {
+	for _, next := range adj[v] {
+		if next == u {
+			continue
+		}
+		if hasCycle(start, v, next, adj) {
 			return true
 		}
 	}
-	visited[u] = false
 	return false
-
-}
-
-func hasCycle(u, v int, adj map[int][]int) bool {
-	visited := make(map[int]bool)
-	return dfs(u, v, adj, visited)
 }
 
 func findRedundantConnection(edges [][]int) []int {
 	adj := make(map[int][]int)
 	for _, e := range edges {
-		if hasCycle(e[0], e[1], adj) {
+		if hasCycle(e[0], e[0], e[1], adj) {
 			return e
 		}
 		adj[e[0]] = append(adj[e[0]], e[1])
