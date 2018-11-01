@@ -39,6 +39,16 @@ func TestValidTree(t *testing.T) {
 			},
 			true,
 		},
+		{
+			5,
+			[][]int{
+				{0, 1},
+				{0, 4},
+				{1, 4},
+				{2, 3},
+			},
+			false,
+		},
 	}
 
 	for i, v := range tests {
