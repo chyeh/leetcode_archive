@@ -53,7 +53,8 @@ func maxProfit(prices []int) int {
 }
 */
 
-// Solution II: Two Pointers
+// Solution II: One Pass
+/*
 func maxProfit(prices []int) int {
 	max := -2147483648
 	var maxDiff int
@@ -67,4 +68,23 @@ func maxProfit(prices []int) int {
 		}
 	}
 	return maxDiff
+}
+*/
+
+// Solution III: One Pass
+func maxProfit(prices []int) int {
+	if len(prices) < 1 {
+		return 0
+	}
+	var max int
+	lowest := prices[0]
+	for _, price := range prices {
+		if price < lowest {
+			lowest = price
+		}
+		if p := price - lowest; p > max {
+			max = p
+		}
+	}
+	return max
 }
