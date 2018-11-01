@@ -1,6 +1,7 @@
 package solution
 
 // Solution I: 2 dimensional DP. Time Complexity O(n^2). Space Complexity O(n^2).
+/*
 func longestPalindrome(s string) string {
 	if s == "" {
 		return ""
@@ -25,6 +26,31 @@ func longestPalindrome(s string) string {
 	}
 	return s[maxI : maxJ+1]
 }
+*/
 
 // Solution II: Expand Around Center
-// Pending...
+func longestPalindrome(s string) string {
+	if s == "" {
+		return ""
+	}
+	longest := 1
+	var maxI, maxJ int
+	for i := range s {
+		for l, r := i, i; l >= 0 && r < len(s) && s[l] == s[r]; l, r = l-1, r+1 {
+			if currLen := r - l + 1; currLen > longest {
+				longest = currLen
+				maxI = l
+				maxJ = r
+			}
+		}
+
+		for l, r := i, i+1; l >= 0 && r < len(s) && s[l] == s[r]; l, r = l-1, r+1 {
+			if currLen := r - l + 1; currLen > longest {
+				longest = currLen
+				maxI = l
+				maxJ = r
+			}
+		}
+	}
+	return s[maxI : maxJ+1]
+}
