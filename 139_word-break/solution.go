@@ -29,7 +29,7 @@ func wordBreak(s string, wordDict []string) bool {
 	}
 	return dp[0][len(s)-1]
 }
-**/
+*/
 
 // Solution II: 1 dimensional DP
 func wordBreak(s string, wordDict []string) bool {
@@ -53,3 +53,21 @@ func wordBreak(s string, wordDict []string) bool {
 	}
 	return dp[len(s)]
 }
+
+// Recursion: Time Limit Exceeded.
+/*
+func wordBreak(s string, wordDict []string) bool {
+	if s == "" {
+		return true
+	}
+	for _, w := range wordDict {
+		if len(w) > len(s) {
+			continue
+		}
+		if s[:len(w)] == w && wordBreak(s[len(w):], wordDict) {
+			return true
+		}
+	}
+	return false
+}
+*/

@@ -13,7 +13,7 @@ func TestWordBreak(t *testing.T) {
 	}{
 		{"leetcode", []string{"leet", "code"}, true},
 		{"applepenapple", []string{"apple", "pen"}, true},
-		{"catsandog", []string{"cats", "dog", "sand", "and", "cat"}, false},
+		{"catsandog", []string{"cats", "dog", "sand", "and", "cat"}, false}, {"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab", []string{"a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa", "aaaaaaaaa", "aaaaaaaaaa"}, false},
 	}
 
 	for i, v := range tests {
