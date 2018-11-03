@@ -6,31 +6,20 @@ type TreeNode struct {
 	Right *TreeNode
 }
 
-var maxLevel int
-var ans int
-
-func recur(n *TreeNode, level int) {
-	if n == nil {
+func find(maxLevel *int, maxVal *int, level int, root *TreeNode) {
+	if root == nil {
 		return
 	}
-	if n.Left != nil {
-		recur(n.Left, level+1)
+	if level > *maxLevel {
+		*maxLevel = level
+		*maxVal = root.Val
 	}
-
-	if n.Right != nil {
-		recur(n.Right, level+1)
-	}
-
-	if level > maxLevel {
-		maxLevel = level
-		ans = n.Val
-	}
+	find(maxLevel, maxVal, level+1, root.Left)
+	find(maxLevel, maxVal, level+1, root.Right)
 }
 
 func findBottomLeftValue(root *TreeNode) int {
-	recur(root, 1)
-	r := ans
-	maxLevel = 0
-	ans = 0
-	return r
+	maxLevel, maxVal := 0, root.Val
+	find(&maxLevel, &maxVal, 0, root)
+	return maxVal
 }
