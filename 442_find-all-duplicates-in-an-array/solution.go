@@ -1,20 +1,21 @@
 package solution
 
-func findDuplicates(nums []int) []int {
-	records := make(map[int]int)
-	for _, n := range nums {
-		if _, ok := records[n]; ok {
-			records[n] = records[n] + 1
-		} else {
-			records[n] = 1
-		}
+func abs(n int) int {
+	if n < 0 {
+		return -n
 	}
+	return n
+}
 
+func findDuplicates(nums []int) []int {
+	nums = append([]int{0}, nums...)
 	var ans []int
-	for key, r := range records {
-		if r == 2 {
-			ans = append(ans, key)
+	for _, num := range nums {
+		if nums[abs(num)] < 0 {
+			ans = append(ans, abs(num))
+			continue
 		}
+		nums[abs(num)] *= -1
 	}
 	return ans
 }
