@@ -1,26 +1,22 @@
 package solution
 
-func find(candidates []int, target int, sol *[][]int, current []int) {
+func find(sol []int, candidates []int, target int, sols *[][]int) {
 	if target < 0 {
 		return
 	}
-
-	cp := make([]int, len(current))
-	copy(cp, current)
+	cp := make([]int, len(sol))
+	copy(cp, sol)
 	if target == 0 {
-		*sol = append(*sol, cp)
+		*sols = append(*sols, cp)
 		return
 	}
-	for i, n := range candidates {
-		find(candidates[i:], target-n, sol, append(cp, n))
+	for i, candidate := range candidates {
+		find(append(cp, candidate), candidates[i:], target-candidate, sols)
 	}
 }
 
 func combinationSum(candidates []int, target int) [][]int {
-	sol := [][]int{}
-	for i, n := range candidates {
-		current := []int{n}
-		find(candidates[i:], target-n, &sol, current)
-	}
-	return sol
+	var sols [][]int
+	find([]int{}, candidates, target, &sols)
+	return sols
 }
