@@ -1,5 +1,7 @@
 package solution
 
+// Solution I: Use set.
+/*
 func singleNumber(nums []int) int {
 	set := make(map[int]struct{})
 	for _, num := range nums {
@@ -11,6 +13,16 @@ func singleNumber(nums []int) int {
 	}
 	var ans int
 	for ans = range set {
+	}
+	return ans
+}
+*/
+
+// Solution II: No extra memory.
+func singleNumber(nums []int) int {
+	ans := 0
+	for _, num := range nums {
+		ans ^= num
 	}
 	return ans
 }
